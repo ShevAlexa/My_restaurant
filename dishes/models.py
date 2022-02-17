@@ -46,3 +46,9 @@ class LikeCommentUser(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liked_comment_table")
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="liked_user_table")
+
+    def save(self, **kwargs):
+        try:
+            super().save(**kwargs)
+        except:
+            LikeCommentUser.objects.get(user=self.user, comment=self.comment).delete()
