@@ -84,25 +84,25 @@
 <div class="container px-4">
   <div class="row row-cols-1 row-cols-md-2 row-cols-md-3 g-4">
     {% for dish in dish_list %}
-    <div class="col-sm-4">
-      <div class="card">
-        <div class="card-body">
-          <img src={{ dish.image }} class="card-img-top" width=”200px”>
-          <h5 class="card-title">{{ dish.name }}</h5>
-          <p class="card-text">{{ dish.cuisine }}</p>
-          {% if dish.comments.all %}
-            {% for comment in dish.comments.all %}
-              <h5 class="card-title">{{ comment.text }}</h5>
-              <a href="{% url 'add-comment-like' id=comment.id %}"><h6 class="card-title"> Likes: {{ comment.like1.count }}</h6></a>
-            {% endfor %}
-          {% endif %}
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <h4 class="text">{{ dish.price }}$</h4>
-            <a href="#" class="btn btn-primary">Add</a>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <img src={{ dish.image }} class="card-img-top" width=”200px”>
+            <h5 class="card-title">{{ dish.name }}</h5>
+            <p class="card-text">{{ dish.cuisine }}</p>
+            {% if dish.comments.all %}
+              {% for comment in dish.comments.all %}
+                <h5 class="card-title">{{ comment.text }}</h5>
+                <a href="{% url 'add-comment-like' id=comment.id %}"><h6 class="card-title"> Likes: {{ comment.count_likes }}</h6></a>
+              {% endfor %}
+            {% endif %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <h4 class="text">{{ dish.price }}$</h4>
+              <a href="#" class="btn btn-primary">Add</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     {% endfor %}
   </div>
 </div>

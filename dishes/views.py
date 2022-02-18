@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Dish, Comment, LikeCommentUser
@@ -6,8 +6,9 @@ from .models import Dish, Comment, LikeCommentUser
 
 class DishView(View):
     def get(self, request):
-        dishes = Dish.objects.prefetch_related("comments")\
-            # .annotate(count=Count("comments.like1"))
+        comment_query = Comment.objects.annotate(count_likes=Count("users_likes"))
+        comments = Prefetch("comments", comment_query)
+        dishes = Dish.objects.prefetch_related(comments)
         return render(request, "dishes/dish_list.html", {"dish_list": dishes})
 
 

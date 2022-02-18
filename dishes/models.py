@@ -35,7 +35,7 @@ class Dish(models.Model):
 class Comment(models.Model):
     text = models.TextField("Комментарий")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор комментария", default=User)
-    like1 = models.ManyToManyField(User, through="LikeCommentUser", related_name="liked_comment")
+    users_likes = models.ManyToManyField(User, through="LikeCommentUser", related_name="liked_comment")
     date = models.DateTimeField(auto_now_add=True, null=True)
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE, related_name="comments", blank=True)
 
