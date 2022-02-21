@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dishes', '0003_comment_alter_dish_price_delete_rating_and_more'),
+        ('planes', '0003_comment_alter_dish_price_delete_rating_and_more'),
     ]
 
     operations = [

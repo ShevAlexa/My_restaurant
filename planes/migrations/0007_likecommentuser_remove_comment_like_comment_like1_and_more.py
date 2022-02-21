@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('auth', '0012_alter_user_first_name_max_length'),
-        ('dishes', '0006_remove_comment_like_comment_like'),
+        ('planes', '0006_remove_comment_like_comment_like'),
     ]
 
     operations = [
@@ -27,12 +27,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='like1',
-            field=models.ManyToManyField(related_name='liked_comment', through='dishes.LikeCommentUser', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='liked_comment', through='planes.LikeCommentUser', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='likecommentuser',
             name='comment',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='liked_user_table', to='dishes.comment'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='liked_user_table', to='planes.comment'),
         ),
         migrations.AddField(
             model_name='likecommentuser',

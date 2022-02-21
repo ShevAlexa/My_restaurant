@@ -74,31 +74,31 @@
 </nav>
 
 <ul class="nav justify-content-center">
-  {% for dish in dish_list %}
+  {% for plane in planes_list %}
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">{{ dish.cuisine }}</a>
+    <a class="nav-link active" aria-current="page" href="#">{{ plane.nation }}</a>
   </li>
   {% endfor %}
 </ul>
 
 <div class="container px-4">
   <div class="row row-cols-1 row-cols-md-2 row-cols-md-3 g-4">
-    {% for dish in dish_list %}
+    {% for plane in planes_list %}
       <div class="col-sm-4">
         <div class="card">
           <div class="card-body">
-            <img src={{ dish.image }} class="card-img-top" width=”200px”>
-            <h5 class="card-title">{{ dish.name }}</h5>
-            <p class="card-text">{{ dish.cuisine }}</p>
-            {% if dish.comments.all %}
+            <img src={{ plane.image }} class="card-img-top" width=”200px”>
+            <h5 class="card-title">{{ plane.model }}</h5>
+            <p class="card-text">{{ plane.nation }}</p>
+            <h6 class="card-title">{{ plane.category }}</h6>
+            {% if plane.comments.all %}
               {% for comment in dish.comments.all %}
                 <h5 class="card-title">{{ comment.text }}</h5>
-                <a href="{% url 'add-comment-like' id=comment.id %}"><h6 class="card-title"> Likes: {{ comment.count_likes }}</h6></a>
+                <a href="{% url 'add-comment-like' id=comment.id %}"><h6 class="card-title"> Likes: {{ comment.likes }}</h6></a>
               {% endfor %}
             {% endif %}
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <h4 class="text">{{ dish.price }}$</h4>
-              <a href="#" class="btn btn-primary">Add</a>
+              <a href="#" class="btn btn-primary">Info</a>
             </div>
           </div>
         </div>

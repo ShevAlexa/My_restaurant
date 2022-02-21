@@ -33,10 +33,10 @@ class Migration(migrations.Migration):
                 ('composition', models.CharField(max_length=200, verbose_name='Состав')),
                 ('recipe', models.TextField(verbose_name='Рецепт')),
                 ('price', models.PositiveIntegerField(default=0, help_text='указать цену в долларах', verbose_name='Цена')),
-                ('image', models.ImageField(upload_to='dishes/', verbose_name='Изображение')),
+                ('image', models.ImageField(upload_to='planes/', verbose_name='Изображение')),
                 ('cuisine', models.CharField(max_length=50, verbose_name='Кухня')),
                 ('url', models.SlugField(max_length=150, unique=True)),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='dishes.category', verbose_name='Категория')),
+                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='planes.category', verbose_name='Категория')),
             ],
             options={
                 'verbose_name': 'Блюдо',
@@ -59,8 +59,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('ip', models.CharField(max_length=150, verbose_name='IP-адрес')),
-                ('dish', models.ForeignKey(on_delete=django.db.models.fields.CharField, to='dishes.dish', verbose_name='Блюдо')),
-                ('star', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dishes.starrating', verbose_name='Звезда')),
+                ('dish', models.ForeignKey(on_delete=django.db.models.fields.CharField, to='planes.dish', verbose_name='Блюдо')),
+                ('star', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='planes.starrating', verbose_name='Звезда')),
             ],
             options={
                 'verbose_name': 'Рейтинг',

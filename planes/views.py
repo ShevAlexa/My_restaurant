@@ -1,15 +1,15 @@
 from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Dish, Comment, LikeCommentUser
+from .models import Airplane, Comment, LikeCommentUser
 
 
-class DishView(View):
+class AirPlaneView(View):
     def get(self, request):
-        comment_query = Comment.objects.annotate(count_likes=Count("users_likes"))
-        comments = Prefetch("comments", comment_query)
-        dishes = Dish.objects.prefetch_related(comments)
-        return render(request, "dishes/dish_list.html", {"dish_list": dishes})
+        # comment_query = Comment.objects.annotate(count_likes=Count("users_likes"))
+        comments = Prefetch("comments")
+        plane = Airplane.objects.prefetch_related(comments)
+        return render(request, "planes/planes_list.html", {"planes_list": plane})
 
 
 class AddCommentLike(View):

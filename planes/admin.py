@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Category, Dish, Comment
+from .models import Category, Airplane, Comment, Nation
 
 admin.site.register(Category)
+admin.site.register(Nation)
 
 
 class CommentAdmin(admin.StackedInline):
@@ -9,8 +10,8 @@ class CommentAdmin(admin.StackedInline):
     model = Comment
 
 
-class DishAdmin(admin.ModelAdmin):
+class AirPlaneAdmin(admin.ModelAdmin):
     inlines = [CommentAdmin]
 
 
-admin.site.register(Dish, DishAdmin)
+admin.site.register(Airplane, AirPlaneAdmin)
