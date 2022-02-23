@@ -17,6 +17,7 @@ class Category(models.Model):
 class Nation(models.Model):
     country = models.CharField("Страна", max_length=30)
     url = models.SlugField(max_length=150, unique=True)
+    image = models.ImageField("Изображение", upload_to='planes/', null=True)
 
     def __str__(self):
         return self.country
@@ -37,6 +38,10 @@ class Airplane(models.Model):
     nation = models.ForeignKey(Nation, verbose_name="Нация", on_delete=models.CASCADE)
     url = models.SlugField(max_length=150, unique=True)
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
+    users_likes = models.ManyToManyField(User, through="LikeAirplaneUser", related_name="liked_airplane")
+    likes = models.PositiveIntegerField(default=0)
+    users_tags = models.ManyToManyField(User, through="TagAirplaneUser", related_name="taged_plane")
+    tag = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.model
@@ -73,3 +78,40 @@ class LikeCommentUser(models.Model):
         finally:
             self.comment.save()
 
+
+class LikeAirplaneUser(models.Model):
+    class Meta:
+        unique_together = ("user", "model")
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liked_airplane_table")
+    model = models.ForeignKey(Airplane, on_delete=models.CASCADE, related_name="liked_user_table")
+
+    def save(self, **kwargs):
+        try:
+            super().save(**kwargs)
+        except:
+            LikeAirplaneUser.objects.get(user=self.user, model=self.model).delete()
+            self.model.likes -= 1
+        else:
+            self.model.likes += 1
+        finally:
+            self.model.save()
+
+
+class TagAirplaneUser(models.Model):
+    class Meta:
+        unique_together = ("user", "model")
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taged_airplane_table")
+    model = models.ForeignKey(Airplane, on_delete=models.CASCADE, related_name="taged_user_table")
+
+    def save(self, **kwargs):
+        try:
+            super().save(**kwargs)
+        except:
+            TagAirplaneUser.objects.get(user=self.user, model=self.model).delete()
+            self.model.tag -= 1
+        else:
+            self.model.tag += 1
+        finally:
+            self.model.save()
