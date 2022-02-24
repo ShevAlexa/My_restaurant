@@ -44,3 +44,15 @@ class TagPlane(View):
             except:
                 TagAirplaneUser.objects.get(user=request.user, model_id=id).delete()
         return redirect('the-main-page')
+
+
+class OrderByNation(View):
+    def get(self, request, id):
+        context = {}
+        comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
+        comments = Prefetch("comments", comment_query)
+        nation = Nation.objects.all()
+        plane = Airplane.objects.filter(nation_id=id).prefetch_related(comments).select_related("nation", "category")
+        context["planes_list"] = plane
+        context["nation"] = nation
+        return render(request, "planes/order_by_nation.html", context)
