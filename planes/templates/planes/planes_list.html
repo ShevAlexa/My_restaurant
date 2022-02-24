@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Акции</a>
+          <a class="nav-link" href="#">Новости</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,39 +32,28 @@
             </span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Dish</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Dish 2</a>
-            </li>
+            {% for plane in user.taged_plane.all %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">{{ plane.model }}
+                  <img src={{ plane.nation.image }} class="fit-picture" height="15px" width="20px">
+                </a>
+              </li>
+            {% endfor %}
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Перейти к оплате</a></li>
+            <li><a class="dropdown-item" href="#">Открыть сохранённое</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Меню <span class="badge bg-secondary">6</span>
+            Нации <span class="badge bg-secondary">{{ nation.count }}</span>
           </a>
+
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Напитки</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Коктейли</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Гарнир</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Вторые блюда</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Супы</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Салаты</a>
-            </li>
+            {% for country in nation %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">{{ country }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </li>
       </ul>
@@ -76,29 +65,22 @@
   </div>
 </nav>
 
-<ul class="nav justify-content-center">
-  {% for nation in nations_list %}
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">{{ nation.country }}</a>
-      <h5> {{ nation.country }}</h5>
-    </li>
-  {% endfor %}
-</ul>
-
 <div class="container px-4">
+  <h5></h5>
   <div class="row row-cols-1 row-cols-md-2 row-cols-md-3 g-4">
-
     {% for plane in planes_list %}
       <div class="col-sm-4">
         <div class="card">
           <div class="card-body">
             <img src={{ plane.image }} class="card-img-top" width=”200px”>
             <h5 class="card-title">{{ plane.model }}</h5>
-            <p class="card-text">{{ plane.nation }}</p>
+            <p class="card-text">{{ plane.nation }}
+              <img src={{ plane.nation.image }} class="fit-picture" height="15px" width="20px">
+            </p>
             <h6 class="card-title">{{ plane.category }}</h6>
 
-            <h6>-----------------------Comments----------------------</h6>
             {% if plane.comments.all %}
+              <h6>-----------------------Comments----------------------</h6>
               {% for comment in plane.comments.all %}
                 <h5 class="card-title">{{ comment.text }}</h5>
 
@@ -116,10 +98,14 @@
                   </a>
                 {% endif %}
                 {{ comment.likes }}
+                commented by {{ comment.author }}
 
               {% endfor %}
-            {% endif %}
             <h6>----------------------------------------------------------</h6>
+            {% else %}
+            <h6>---------------------No comments---------------------</h6>
+            {% endif %}
+
 
             {% if plane not in user.taged_plane.all  %}
               <a href="{% url 'tag-plane' id=plane.id %}">
@@ -148,8 +134,8 @@
                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                 </svg>
               </a>
-            {{ plane.likes }}
             {% endif %}
+            {{ plane.likes }}
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a href="#" class="btn btn-primary">Info</a>

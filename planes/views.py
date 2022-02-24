@@ -6,11 +6,14 @@ from .models import Airplane, Comment, LikeCommentUser, LikeAirplaneUser, TagAir
 
 class AirPlaneView(View):
     def get(self, request):
-        comment_query = Comment.objects.annotate(count_likes=Count("users_likes"))
+        context = {}
+        comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
         comments = Prefetch("comments", comment_query)
-        # nation = Nation.objects.all()
-        plane = Airplane.objects.prefetch_related(comments)
-        return render(request, "planes/planes_list.html", {"planes_list": plane})
+        nation = Nation.objects.all()
+        plane = Airplane.objects.prefetch_related(comments).select_related("nation", "category")
+        context["planes_list"] = plane
+        context["nation"] = nation
+        return render(request, "planes/planes_list.html", context)
 
 
 class AddCommentLike(View):
