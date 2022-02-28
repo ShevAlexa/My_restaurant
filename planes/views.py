@@ -7,10 +7,10 @@ from .models import Airplane, Comment, LikeCommentUser, LikeAirplaneUser, TagAir
 class AirPlaneView(View):
     def get(self, request):
         context = {}
-        comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
-        comments = Prefetch("comments", comment_query)
+        # comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
+        # comments = Prefetch("comments", comment_query)
         nation = Nation.objects.all()
-        plane = Airplane.objects.prefetch_related(comments).select_related("nation", "category")
+        plane = Airplane.objects.select_related("nation", "category").order_by("model")
         context["planes_list"] = plane
         context["nation"] = nation
         return render(request, "planes/planes_list.html", context)
@@ -53,6 +53,28 @@ class OrderByNation(View):
         comments = Prefetch("comments", comment_query)
         nation = Nation.objects.all()
         plane = Airplane.objects.filter(nation_id=id).prefetch_related(comments).select_related("nation", "category")
+        chosen_nation = Nation.objects.get(id=id)
         context["planes_list"] = plane
         context["nation"] = nation
+        context["chosen_nation"] = chosen_nation
         return render(request, "planes/order_by_nation.html", context)
+
+
+class PlaneInfo(View):
+    def get(self, request, id):
+        context = {}
+        nation = Nation.objects.all()
+        plane = Airplane.objects.get(id=id)
+        context["plane"] = plane
+        context["nation"] = nation
+        return render(request, "planes/plane_info.html", context)
+
+
+class SavedPlanes(View):
+    def get(self, request):
+        context = {}
+        nation = Nation.objects.all()
+        plane = Airplane.objects.select_related("nation", "category").order_by("model")
+        context["planes_list"] = plane
+        context["nation"] = nation
+        return render(request, "planes/saves_planes.html", context)
