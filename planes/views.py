@@ -77,4 +77,4 @@ class SavedPlanes(View):
         plane = Airplane.objects.select_related("nation", "category").order_by("model")
         context["planes_list"] = plane
         context["nation"] = nation
-        return render(request, "planes/saves_planes.html", context)
+        return render(request, "planes/saved_planes.html", context)
