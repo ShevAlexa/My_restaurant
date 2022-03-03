@@ -12,6 +12,8 @@ class CommentAdmin(admin.StackedInline):
 
 class AirPlaneAdmin(admin.ModelAdmin):
     inlines = [CommentAdmin]
+    readonly_fields = ['likes', 'tag']
+    prepopulated_fields = {"url": ("model",)}
 
 
 admin.site.register(Airplane, AirPlaneAdmin)

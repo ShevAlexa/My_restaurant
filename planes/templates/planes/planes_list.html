@@ -5,9 +5,9 @@
 {% for country in nation %}
 
   <div class="container px-4">
-    <hr>
+    <hr style="height:2px">
       <center><p><h4>{{ country }}</h4></p></center>
-    <hr>
+    <hr style="height:2px">
     <div class="row row-cols-1 row-cols-md-2 row-cols-md-3 g-4">
       {% for plane in planes_list %}
         {% if country == plane.nation %}
@@ -52,7 +52,7 @@
                 {{ plane.likes }}
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <a href="{% url 'plane_info' id=plane.id %}" class="btn btn-primary">Info</a>
+                  <a href="{% url 'plane_info' url=plane.url %}" class="btn btn-primary">Info</a>
                 </div>
               </div>
             </div>

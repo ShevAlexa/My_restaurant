@@ -77,8 +77,13 @@
         <h6>-------------------------------------------------------------------------------------------No comments-----------------------------------------------------------------------------------------</h6>
         {% endif %}
 
+<!--        <form action="handler.php">-->
+<!--          <textarea name="comment" rows="1"></textarea>-->
+<!--          <input type="submit">-->
+<!--        </form>-->
+
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <a href="{% url 'the-main-page' %}" class="btn btn-primary">Return</a>
+          <input class="btn btn-primary" type="button" onclick="history.back();" value="Return"/>
         </div>
 
       </div>

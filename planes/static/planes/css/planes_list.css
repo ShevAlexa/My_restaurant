@@ -1,0 +1,17 @@
+body {
+    background: url("bg_sky.jpg");
+}
+
+aside nav {
+    background: #a2e2ff;
+}
+
+aside ul li {
+
+}
+
+main a {
+    margin-inside: 15px;
+    text-decoration: none;
+}
+

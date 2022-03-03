@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from slugify import slugify
 
 
 class Category(models.Model):
@@ -45,6 +46,15 @@ class Airplane(models.Model):
 
     def __str__(self):
         return self.model
+
+    def save(self, **kwargs):
+        if self.id is None:
+            self.url = slugify(self.model)
+        try:
+            super().save(**kwargs)
+        except:
+            self.url += str(self.id)
+            super().save(**kwargs)
 
     class Meta:
         verbose_name = "Самолёт"
