@@ -66,7 +66,6 @@ class PlaneInfo(View):
         comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
         comments = Prefetch("comments", comment_query)
         nation = Nation.objects.all()
-        # plane = Airplane.objects.select_related("nation", "category").prefetch_related(comments).get(id=id)
         plane = Airplane.objects.select_related("nation", "category").prefetch_related(comments).get(url=url)
         context["plane"] = plane
         context["nation"] = nation

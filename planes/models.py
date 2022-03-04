@@ -30,7 +30,7 @@ class Nation(models.Model):
 
 class Airplane(models.Model):
     model = models.CharField("Модель", max_length=100)
-    cruising_speed = models.CharField("Крейсерская скорость", max_length=5, null=True)
+    cruising_speed = models.CharField("Cкорость", max_length=5, null=True)
     constructor = models.CharField("Конструктор", max_length=30, null=True)
     engine_type = models.CharField("Тип двигателя", max_length=50, null=True)
     production_volume = models.PositiveIntegerField("Единиц произведено", default=0)

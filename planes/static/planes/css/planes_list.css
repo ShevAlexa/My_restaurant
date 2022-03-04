@@ -2,16 +2,32 @@ body {
     background: url("bg_sky.jpg");
 }
 
-aside nav {
-    background: #a2e2ff;
-}
 
-aside ul li {
-
-}
-
-main a {
+main a{
     margin-inside: 15px;
     text-decoration: none;
+    color: red;
+    display: compact;
 }
 
+
+main div div div div {
+    background: url("bg_card.jpg");
+    width: 100%;
+    height: 100%;
+}
+
+
+main div div div div div{
+    background: none;
+}
+
+
+main a img {
+    display: block;
+}
+
+
+main a img:hover {
+    transform: scale(1.05);
+}

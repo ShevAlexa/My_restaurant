@@ -4,7 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    # path("plane_info/<int:id>/", views.PlaneInfo.as_view(), name="plane_info"),
     path("plane_info/<str:url>/", views.PlaneInfo.as_view(), name="plane_info"),
     path("add-comment-like/<int:id>/", views.AddCommentLike.as_view(), name='add-comment-like'),
     path("add-airplane-like/<int:id>/", views.AddAirplaneLike.as_view(), name='add-airplane-like'),
