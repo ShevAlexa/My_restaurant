@@ -29,7 +29,7 @@ class Nation(models.Model):
 
 
 class Airplane(models.Model):
-    model = models.CharField("Модель", max_length=100)
+    model = models.CharField("Модель", max_length=100, db_index=True)
     cruising_speed = models.CharField("Cкорость", max_length=5, null=True)
     constructor = models.CharField("Конструктор", max_length=30, null=True)
     engine_type = models.CharField("Тип двигателя", max_length=50, null=True)
@@ -62,8 +62,13 @@ class Airplane(models.Model):
 
 
 class Comment(models.Model):
-    text = models.TextField("Комментарий")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор комментария", default=User)
+    text = models.TextField("Комментарий", null=True)
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               verbose_name="Автор комментария",
+                               null=True,
+                               blank=True,
+                               default=User)
     users_likes = models.ManyToManyField(User, through="LikeCommentUser", related_name="liked_comment")
     likes = models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True, null=True)
@@ -125,3 +130,4 @@ class TagAirplaneUser(models.Model):
             self.model.tag += 1
         finally:
             self.model.save()
+

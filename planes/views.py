@@ -17,13 +17,13 @@ class AirPlaneView(View):
 
 
 class AddCommentLike(View):
-    def get(self, request, id):
+    def get(self, request, id, url):
         if request.user.is_authenticated:
             try:
                 LikeCommentUser.objects.create(user=request.user, comment_id=id)
             except:
                 LikeCommentUser.objects.get(user=request.user, comment_id=id).delete()
-        return redirect('the-main-page')
+        return redirect("plane_info", url)
 
 
 class AddAirplaneLike(View):
@@ -33,7 +33,7 @@ class AddAirplaneLike(View):
                 LikeAirplaneUser.objects.create(user=request.user, model_id=id)
             except:
                 LikeAirplaneUser.objects.get(user=request.user, model_id=id).delete()
-        return redirect('the-main-page')
+        return redirect("the-main-page")
 
 
 class TagPlane(View):
@@ -52,7 +52,8 @@ class OrderByNation(View):
         nation = Nation.objects.all()
         plane = Airplane.objects.filter(nation_id=id)\
             .annotate(count_likes=Count("users_likes"))\
-            .select_related("nation", "category")
+            .select_related("nation", "category")\
+            .order_by("category_id")
         chosen_nation = Nation.objects.get(id=id)
         context["planes_list"] = plane
         context["nation"] = nation
@@ -82,3 +83,14 @@ class SavedPlanes(View):
         context["planes_list"] = plane
         context["nation"] = nation
         return render(request, "planes/saved_planes.html", context)
+
+
+class AddComment(View):
+    def post(self, request, url):
+        if request.user.is_authenticated:
+            Comment.objects.create(
+                text=request.POST['comment_text'],
+                author=request.user,
+                model=Airplane.objects.get(url=url)
+            )
+        return redirect('plane_info', url=url)
