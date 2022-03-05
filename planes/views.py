@@ -27,23 +27,27 @@ class AddCommentLike(View):
 
 
 class AddAirplaneLike(View):
-    def get(self, request, id):
+    def get(self, request, id, redirect_address, nation_id):
         if request.user.is_authenticated:
             try:
                 LikeAirplaneUser.objects.create(user=request.user, model_id=id)
             except:
                 LikeAirplaneUser.objects.get(user=request.user, model_id=id).delete()
-        return redirect("the-main-page")
+        if nation_id == 0:
+            return redirect(redirect_address)
+        return redirect(redirect_address, id=nation_id)
 
 
 class TagPlane(View):
-    def get(self, request, id):
+    def get(self, request, id, redirect_address, nation_id):
         if request.user.is_authenticated:
             try:
                 TagAirplaneUser.objects.create(user=request.user, model_id=id)
             except:
                 TagAirplaneUser.objects.get(user=request.user, model_id=id).delete()
-        return redirect('the-main-page')
+        if nation_id == 0:
+            return redirect(redirect_address)
+        return redirect(redirect_address, id=nation_id)
 
 
 class OrderByNation(View):

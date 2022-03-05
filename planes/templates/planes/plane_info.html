@@ -81,7 +81,7 @@
         <form action="{% url 'add_comment_to_plane' url=plane.url %}" method="post">
           {% csrf_token %}
           <label for="comment"></label>
-          <textarea rows="3" cols="164" id="comment" name="comment_text"></textarea><br>
+          <textarea rows="3" cols="163" id="comment" name="comment_text"></textarea><br>
           <input type="submit" value="Отправить">
         </form>
 
