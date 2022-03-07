@@ -7,10 +7,21 @@ from .models import Airplane, Comment, LikeCommentUser, LikeAirplaneUser, TagAir
 class AirPlaneView(View):
     def get(self, request):
         context = {}
+        search_query = request.GET.get('search', '')
+
+        if search_query:
+            plane = Airplane.objects.filter(model__icontains=search_query)\
+                .annotate(count_likes=Count("users_likes")) \
+                .select_related("nation", "category")\
+                .prefetch_related("users_tags", "users_likes")\
+                .order_by("category_id")
+        else:
+            plane = Airplane.objects.annotate(count_likes=Count("users_likes"))\
+                .select_related("nation", "category")\
+                .prefetch_related("users_tags", "users_likes")\
+                .order_by("category_id")
+
         nation = Nation.objects.all()
-        plane = Airplane.objects.annotate(count_likes=Count("users_likes"))\
-            .select_related("nation", "category")\
-            .order_by("category_id")
         context["planes_list"] = plane
         context["nation"] = nation
         return render(request, "planes/planes_list.html", context)
@@ -57,6 +68,7 @@ class OrderByNation(View):
         plane = Airplane.objects.filter(nation_id=id)\
             .annotate(count_likes=Count("users_likes"))\
             .select_related("nation", "category")\
+            .prefetch_related("users_tags", "users_likes")\
             .order_by("category_id")
         chosen_nation = Nation.objects.get(id=id)
         context["planes_list"] = plane
@@ -82,10 +94,12 @@ class SavedPlanes(View):
         context = {}
         nation = Nation.objects.all()
         plane = Airplane.objects.annotate(count_likes=Count("users_likes")) \
-            .select_related("nation", "category") \
+            .select_related("nation", "category")\
+            .prefetch_related("users_tags", "users_likes") \
             .order_by("nation_id")
         context["planes_list"] = plane
         context["nation"] = nation
+        context["url_name"] = "saved_planes"
         return render(request, "planes/saved_planes.html", context)
 
 
@@ -98,3 +112,4 @@ class AddComment(View):
                 model=Airplane.objects.get(url=url)
             )
         return redirect('plane_info', url=url)
+
