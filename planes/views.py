@@ -99,7 +99,6 @@ class SavedPlanes(View):
             .order_by("nation_id")
         context["planes_list"] = plane
         context["nation"] = nation
-        context["url_name"] = "saved_planes"
         return render(request, "planes/saved_planes.html", context)
 
 

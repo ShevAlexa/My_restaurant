@@ -10,6 +10,11 @@ main a{
 }
 
 
+main .bi-bookmark-check, .bi-bookmark-check-fill{
+    color: black;
+}
+
+
 main div div div div {
     background: url("bg_card_2.jpg");
     width: 100%;
