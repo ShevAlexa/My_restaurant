@@ -1,0 +1,44 @@
+body {
+    background: url("login_bg.jpg");
+}
+
+main div.card {
+    background: white;
+    opacity: 0.85;
+    margin-top: 15%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+main a{
+    text-decoration: none;
+}
+
+
+main a:hover{
+    text-decoration-line: underline;
+}
+
+
+main input.button-registr{
+    display: block;
+}
+
+
+main input.button-registr:hover{
+    color: black;
+    background: #8cd24d;
+    transition: all .3s linear;
+}
+
+
+main input.button-sign-in{
+    display: block;
+}
+
+
+main input.button-sign-in:hover{
+    color: black;
+    background: #8dbff8;
+    transition: all .3s linear;
+}

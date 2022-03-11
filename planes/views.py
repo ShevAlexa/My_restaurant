@@ -1,3 +1,5 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect
 from django.views import View
@@ -111,4 +113,25 @@ class AddComment(View):
                 model=Airplane.objects.get(url=url)
             )
         return redirect('plane_info', url=url)
+
+
+class Login(LoginView):
+    template_name = 'planes/login.html'
+
+
+class Logout(LogoutView):
+    template_name = 'planes/logout.html'
+
+
+# UserRegistration
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, "planes/registration.html", {'form': form})
 

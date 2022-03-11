@@ -4,13 +4,28 @@ body {
 
 
 main a{
-    margin-inside: 15px;
+    margin-inside: 10px;
     text-decoration: none;
+}
+
+
+main a img {
+    display: block;
+    transition: 0.6s;
+}
+
+
+main a img:hover {
+    transform: scale(1.05);
+}
+
+
+main .bi-bi-heart, .bi-bi-heart-fill{
     color: red;
 }
 
 
-main .bi-bookmark-check, .bi-bookmark-check-fill{
+main .bi-bi-bookmark-check, .bi-bi-bookmark-check-fill{
     color: black;
 }
 
@@ -38,13 +53,6 @@ main form{
 }
 
 
-main a img {
-    display: block;
-    transition: 0.6s;
+aside div.button-exit{
+    margin-left: 10px;
 }
-
-
-main a img:hover {
-    transform: scale(1.05);
-}
-

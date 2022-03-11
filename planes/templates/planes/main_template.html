@@ -33,23 +33,25 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Новости</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Сохранённое
-                <span class="badge bg-secondary">{{ user.taged_plane.count }}</span>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for plane in user.taged_plane.all %}
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'plane_info' url=plane.url %}">{{ plane.model }}
-                      <img src={{ plane.nation.image.url }} class="fit-picture" height="15px" width="20px">
-                    </a>
-                  </li>
-                {% endfor %}
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'saved_planes' %}">Открыть сохранённое</a></li>
-              </ul>
-            </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Сохранённое
+                  <span class="badge bg-secondary">{{ user.taged_plane.count }}</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for plane in user.taged_plane.all %}
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'plane_info' url=plane.url %}">{{ plane.model }}
+                        <img src={{ plane.nation.image.url }} class="fit-picture" height="15px" width="20px">
+                      </a>
+                    </li>
+                  {% endfor %}
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'saved_planes' %}">Открыть сохранённое</a></li>
+                </ul>
+              </li>
+            {% endif %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Нации
@@ -69,6 +71,22 @@
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
+
+
+          {% if user.is_authenticated %}
+            <div class="button-exit px-1">
+              <a href="{% url 'logout' %}">
+                <input class="btn btn-outline-danger" type="button" value="Выход"/>
+              </a>
+            </div>
+          {% else %}
+            <div class="button-exit px-1">
+              <a href="{% url 'logout' %}">
+                <input class="btn btn-outline-primary" type="button" value="Вход"/>
+              </a>
+            </div>
+          {% endif %}
+
         </div>
       </div>
     </nav>

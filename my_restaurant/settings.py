@@ -124,6 +124,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+LOGIN_REDIRECT_URL = 'the-main-page'
+LOGOUT_REDIRECT_URL = 'login'
+
 MEDIA = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
