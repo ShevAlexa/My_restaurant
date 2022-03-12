@@ -22,7 +22,6 @@ class AirPlaneView(View):
                 .select_related("nation", "category")\
                 .prefetch_related("users_tags", "users_likes")\
                 .order_by("category_id")
-
         nation = Nation.objects.all()
         context["planes_list"] = plane
         context["nation"] = nation
@@ -134,4 +133,3 @@ def sign_up(request):
     else:
         form = UserCreationForm()
     return render(request, "planes/registration.html", {'form': form})
-

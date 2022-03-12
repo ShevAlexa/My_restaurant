@@ -33,10 +33,6 @@
 
                     <center>
 
-                        {% if error_messages %}
-                            <h7>{{ form.error_messages }}</h7>
-                        {% endif %}
-
                         <div class="mb-2">
                             <h5>{{ form.username.label_tag }}</h5>
                             {{ form.username }}
@@ -57,6 +53,7 @@
                         <div class="mb-2">
                             <h7>Уже есть аккаунт? Кликай <a href="{% url 'login' %}">здесь</a>.</h7>
                         </div>
+
                     </center>
 
                 </div>
