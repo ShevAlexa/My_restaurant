@@ -55,7 +55,7 @@
             <h6>---------------------------------------------------------------------------------------------Comments-------------------------------------------------------------------------------------------</h6>
 
           {% for comment in plane.comments.all %}
-              <h5 class="card-title">{{ comment.text }}</h5>
+              <h5 class="card-title-comment">{{ comment.text }}</h5>
 
               {% if comment not in user.liked_comment.all %}
                 <a href="{% url 'add-comment-like' id=comment.id url=plane.url %}">
@@ -71,7 +71,8 @@
                 </a>
               {% endif %}
               {{ comment.likes }}
-              commented by {{ comment.author }}
+              commented by {{ comment.author }},
+              <h7>{{ comment.date }}</h7>
 
             {% endfor %}
           {% else %}
@@ -85,10 +86,6 @@
             <input type="submit" value="Отправить">
           </form>
         {% endif %}
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <input class="btn btn-outline-primary" type="button" onclick="history.back();" value="Назад"/>
-        </div>
 
       </div>
     </div>

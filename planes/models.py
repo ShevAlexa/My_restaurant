@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from slugify import slugify
@@ -131,3 +133,38 @@ class TagAirplaneUser(models.Model):
         finally:
             self.model.save()
 
+
+class NewsModel(models.Model):
+    title = models.CharField("Заголовок", max_length=50)
+    text = models.TextField("Текст")
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+
+
+# class UserAccount(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     user_nick = models.CharField(default=int(datetime.timestamp(datetime.now())), blank=True)
+#     ages = models.PositiveIntegerField(max_length=2)
+#     city = models.CharField()
+#     country = models.CharField()
+#     avatar = models.ImageField()
+#     registrate_date = models.DateTimeField(auto_now_add=True, null=True)
+#     user_url = models.SlugField(max_length=150, unique=True)
+#
+#     def __str__(self):
+#         return self.user_nick
+#
+#     def save(self, **kwargs):
+#         if self.id is None:
+#             self.user_url = slugify(self.user_nick)
+#         try:
+#             super().save(**kwargs)
+#         except:
+#             self.user_url += str(self.id)
+#             super().save(**kwargs)

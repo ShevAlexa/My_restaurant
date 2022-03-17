@@ -1,0 +1,24 @@
+{% extends 'planes/main_template.html' %}
+
+{% block news %}
+
+<div class="container">
+    {% for new in news %}
+    <div class="card-news">
+
+        {% if new.date >= user.last_login %}
+            <div class="card-header-new">
+                <h5>● New post</h5>
+            </div>
+        {% endif %}
+
+        <div class="card-body">
+            <h5 class="card-title-news">{{ new.title }}</h5>
+            <p class="card-text">{{ new.text }}</p>
+            <i><p class="d-grid gap-2 d-md-flex justify-content-md-end">{{ new.date }}</p></i>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

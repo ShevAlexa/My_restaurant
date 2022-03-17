@@ -1,13 +1,15 @@
 from django.contrib import admin
-from .models import Category, Airplane, Comment, Nation
+from .models import Category, Airplane, Comment, Nation, NewsModel
 
 admin.site.register(Category)
 admin.site.register(Nation)
+admin.site.register(NewsModel)
 
 
 class CommentAdmin(admin.StackedInline):
     extra = 1
     model = Comment
+    readonly_fields = ['likes', 'author']
 
 
 class AirPlaneAdmin(admin.ModelAdmin):
