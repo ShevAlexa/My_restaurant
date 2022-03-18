@@ -42,8 +42,10 @@ main input{
 
 
 main form{
-    padding: 0.5%;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
     margin-top: 5px;
+    width: auto;
 }
 
 
@@ -55,11 +57,6 @@ main div.bottom-page-text {
     margin-left: 30%;
     margin-right: 30%;
     border-radius: 10px;
-}
-
-
-main h5.card-title-comment{
-    margin-top: 25px;
 }
 
 
@@ -82,6 +79,27 @@ main div.card-header-new{
     text-indent: 50px;
     color: red;
     text-decoration-line: blink;
+}
+
+
+main div.comment-block{
+    display: block;
+    border-color: white;
+    border-style: groove;
+    border-radius: 10px;
+    border-width: 3px;
+    margin-bottom: 15px;
+    margin-inside: 5px;
+}
+
+
+main div.comment{
+    margin: 10px;
+}
+
+
+main button.btn-close{
+    float: right;
 }
 
 

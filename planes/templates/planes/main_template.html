@@ -52,6 +52,7 @@
                 </ul>
               </li>
             {% endif %}
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Нации
@@ -67,6 +68,21 @@
                 {% endfor %}
               </ul>
             </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Категории
+                <span class="badge bg-secondary">{{ category.count }}</span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for name in category %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'order_by_category' id=name.id %}">{{ name }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+
           </ul>
           <form class="d-flex" action="{% url 'the-main-page' %}">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
@@ -105,6 +121,9 @@
     {% endblock %}
 
     {% block order_by_nation %}
+    {% endblock %}
+
+    {% block order_by_category %}
     {% endblock %}
 
     {% block news %}
