@@ -10,7 +10,7 @@ main a{
 }
 
 
-main a img {
+main a img{
     display: block;
     transition: 0.6s;
 }
@@ -100,6 +100,35 @@ main div.comment{
 
 main button.btn-close{
     float: right;
+    display: block;
+    transition: 0.5s;
+}
+
+
+main button.btn-close:hover{
+    transform: scale(1.2);
+}
+
+
+aside a.nav-link{
+    display: block;
+    transition: 0.5s;
+}
+
+
+aside a.nav-link:hover{
+    transform: scale(1.075);
+}
+
+
+aside a.navbar-brand{
+    display: block;
+    transition: 0.5s;
+}
+
+
+aside a.navbar-brand:hover {
+    transform: scale(1.1);
 }
 
 
@@ -127,4 +156,21 @@ aside .btn-outline-danger{
 aside .btn-outline-primary{
     margin-left: 30px;
     margin-right: 30px;
+}
+
+
+aside button.btn-close{
+    float: right;
+    display: block;
+    transition: 0.5s;
+}
+
+
+aside button.btn-close:hover{
+    transform: scale(1.2);
+}
+
+
+aside form{
+    padding-left: 15px;
 }

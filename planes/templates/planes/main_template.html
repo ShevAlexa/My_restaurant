@@ -40,6 +40,7 @@
                   <span class="badge bg-secondary">{{ user.taged_plane.count }}</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
                   {% for plane in user.taged_plane.all %}
                       <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'plane_info' url=plane.url %}">{{ plane.model }}
@@ -47,8 +48,14 @@
                         </a>
                       </li>
                   {% endfor %}
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'saved_planes' %}">Открыть сохранённое</a></li>
+
+                  {% if user.taged_plane.count == 0 %}
+                    <center><li>Пусто</li></center>
+                  {% else %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'saved_planes' %}">Открыть сохранённое</a></li>
+                  {% endif %}
+
                 </ul>
               </li>
             {% endif %}
@@ -61,7 +68,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for country in nation %}
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'order_by_nation' id=country.id %}">{{ country }}
+                    <a class="nav-link active" aria-current="page" href="{% url 'order_by_nation' url=country.url %}">{{ country }}
                       <img src={{ country.image.url }} class="fit-picture" height="15px" width="20px">
                     </a>
                   </li>
@@ -77,13 +84,32 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for name in category %}
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'order_by_category' id=name.id %}">{{ name }}</a>
+                    <a href="{% url 'delete_category' url=name.url %}">
+                      <button type="button" class="btn-close" aria-label="Close"></button>
+                    </a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'order_by_category' url=name.url %}">{{ name }}</a>
                   </li>
                 {% endfor %}
               </ul>
             </li>
-
           </ul>
+
+          {% if user.is_authenticated and user.is_superuser %}
+
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Инструменты администратора
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Добавить самолёт</a></li>
+                <li><a class="dropdown-item" href="#">Добавить нацию</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_category' %}">Добавить категорию</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_news' %}">Добавить новость</a></li>
+              </ul>
+            </div>
+
+          {% endif %}
+
           <form class="d-flex" action="{% url 'the-main-page' %}">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -127,6 +153,15 @@
     {% endblock %}
 
     {% block news %}
+    {% endblock %}
+
+<!--    {%  block add_plane %}-->
+<!--    {% endblock %}-->
+
+    {% block add_news %}
+    {% endblock %}
+
+    {% block add_category %}
     {% endblock %}
 
     <div class="bottom-page-text">

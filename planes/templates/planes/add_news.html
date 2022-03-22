@@ -1,0 +1,32 @@
+{% extends 'planes/main_template.html' %}
+
+{% block add_news %}
+
+<div class="container">
+    <form method="post" action="{% url 'add_news' %}">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-body">
+
+                <hr style="height:3px">
+                <center><p><h2>Добавить новость</h2></p></center>
+                <hr style="height:3px">
+
+                <center>
+
+                    <label for="title"></label>
+                    <textarea rows="1" cols="50" id="title" name="title">Название</textarea><br>
+
+                    <label for="text"></label>
+                    <textarea rows="5" cols="100" id="text" name="text">Текст</textarea><br>
+
+                    <input type="submit" value="Отправить">
+
+                </center>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

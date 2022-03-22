@@ -1,0 +1,54 @@
+{% extends 'planes/main_template.html' %}
+
+{% block add_plane %}
+
+<div class="container">
+    <form method="post" action="{% url 'add_plane' %}">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-body">
+
+                <hr style="height:3px">
+                <center><p><h2>Добавить самолёт</h2></p></center>
+                <hr style="height:3px">
+
+                <center>
+
+                    <label for="model"></label>
+                    <textarea rows="1" cols="30" id="model" name="model"></textarea><br>
+                    <label for="cruising_speed"></label>
+                    <textarea rows="1" cols="30" id="cruising_speed" name="cruising_speed"></textarea><br>
+                    <label for="constructor"></label>
+                    <textarea rows="1" cols="50" id="constructor" name="constructor"></textarea><br>
+                    <label for="engine_type"></label>
+                    <textarea rows="1" cols="50" id="engine_type" name="engine_type"></textarea><br>
+                    <label for="production_volume"></label>
+                    <textarea rows="1" cols="10" id="production_volume" name="production_volume"></textarea><br>
+                    <label for="reference"></label>
+                    <textarea rows="5" cols="100" id="reference" name="reference"></textarea><br>
+                    <label for="image"></label>
+                    <textarea rows="1" cols="50" id="image" name="image"></textarea><br>
+                    <label for="nation"></label>
+                    <select>
+                        {% for country in nation %}
+                            <option>{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category"></label>
+                    <select>
+                        {% for country in nation %}
+                            <option>{{ country }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="submit" value="Отправить">
+
+
+                </center>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

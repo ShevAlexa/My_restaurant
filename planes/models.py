@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from slugify import slugify
 
@@ -11,6 +9,15 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, **kwargs):
+        if self.id is None:
+            self.url = slugify(self.name)
+        try:
+            super().save(**kwargs)
+        except:
+            self.url += str(self.id)
+            super().save(**kwargs)
 
     class Meta:
         verbose_name = 'Категория'
@@ -24,6 +31,15 @@ class Nation(models.Model):
 
     def __str__(self):
         return self.country
+
+    def save(self, **kwargs):
+        if self.id is None:
+            self.url = slugify(self.country)
+        try:
+            super().save(**kwargs)
+        except:
+            self.url += str(self.id)
+            super().save(**kwargs)
 
     class Meta:
         verbose_name = "Нация"
@@ -147,24 +163,5 @@ class NewsModel(models.Model):
         verbose_name_plural = 'Новости'
 
 
-# class UserAccount(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     user_nick = models.CharField(default=int(datetime.timestamp(datetime.now())), blank=True)
-#     ages = models.PositiveIntegerField(max_length=2)
-#     city = models.CharField()
-#     country = models.CharField()
-#     avatar = models.ImageField()
-#     registrate_date = models.DateTimeField(auto_now_add=True, null=True)
-#     user_url = models.SlugField(max_length=150, unique=True)
-#
-#     def __str__(self):
-#         return self.user_nick
-#
-#     def save(self, **kwargs):
-#         if self.id is None:
-#             self.user_url = slugify(self.user_nick)
-#         try:
-#             super().save(**kwargs)
-#         except:
-#             self.user_url += str(self.id)
-#             super().save(**kwargs)
+# class Users(AbstractUser):
+#     pass

@@ -42,39 +42,40 @@ class AddCommentLike(View):
 
 
 class AddAirplaneLike(View):
-    def get(self, request, id, redirect_address, chousen_id):
+    def get(self, request, id, redirect_address, chousen_url):
         if request.user.is_authenticated:
             try:
                 LikeAirplaneUser.objects.create(user=request.user, model_id=id)
             except:
                 LikeAirplaneUser.objects.get(user=request.user, model_id=id).delete()
-        if chousen_id == 0:
+        if chousen_url == 'None':
             return redirect(redirect_address)
-        return redirect(redirect_address, id=chousen_id)
+        return redirect(redirect_address, url=chousen_url)
 
 
 class TagPlane(View):
-    def get(self, request, id, redirect_address, chousen_id):
+    def get(self, request, id, redirect_address, chousen_url):
         if request.user.is_authenticated:
             try:
                 TagAirplaneUser.objects.create(user=request.user, model_id=id)
             except:
                 TagAirplaneUser.objects.get(user=request.user, model_id=id).delete()
-        if chousen_id == 0:
+        if chousen_url == 'None':
             return redirect(redirect_address)
-        return redirect(redirect_address, id=chousen_id)
+        return redirect(redirect_address, url=chousen_url)
 
 
 class OrderByNation(View):
-    def get(self, request, id):
+    def get(self, request, url):
         context = dict()
-        plane = Airplane.objects.filter(nation_id=id)\
+        filter_id = Nation.objects.get(url=url).id
+        plane = Airplane.objects.filter(nation_id=filter_id)\
             .annotate(count_likes=Count("users_likes"))\
             .select_related("nation", "category")\
             .prefetch_related("users_tags", "users_likes")\
             .order_by("category_id", "model")
         context["planes_list"] = plane
-        chosen_nation = Nation.objects.get(id=id)
+        chosen_nation = Nation.objects.get(url=url)
         context["chosen_nation"] = chosen_nation
         nation = Nation.objects.all()
         context["nation"] = nation
@@ -84,14 +85,15 @@ class OrderByNation(View):
 
 
 class OrderByCategory(View):
-    def get(self, request, id):
+    def get(self, request, url):
         context = dict()
-        plane = Airplane.objects.filter(category_id=id)\
+        filter_id = Category.objects.get(url=url).id
+        plane = Airplane.objects.filter(category_id=filter_id)\
             .annotate(count_likes=Count("users_likes"))\
             .select_related("nation", "category")\
             .prefetch_related("users_tags", "users_likes")\
             .order_by("nation", "model")
-        chosen_category = Category.objects.get(id=id)
+        chosen_category = Category.objects.get(url=url)
         context["chosen_category"] = chosen_category
         context["planes_list"] = plane
         nation = Nation.objects.all()
@@ -179,3 +181,112 @@ def sign_up(request):
     else:
         form = UserCreationForm()
     return render(request, "planes/registration.html", {'form': form})
+
+
+# equipment for admin
+
+
+# class CreatePlane(View):
+#     def post(self, request):
+#         if request.user.is_authenticated and request.user.is_superuser:
+#             Airplane.objects.create(
+#                 model=request.POST['model'],
+#                 cruising_speed=request.POST['cruising_speed'],
+#                 constructor=request.POST['constructor'],
+#                 engine_type=request.POST['engine_type'],
+#                 production_volume=request.POST['production_volume'],
+#                 reference=request.POST['reference'],
+#                 image=request.POST[],                                                                # should will fix
+#                 nation=request.POST['nation'],
+#                 category=request.POST['category'],
+#
+#                 likes=0,
+#
+#                 tag=0,
+#             )
+#         return redirect('the-main-page')
+#
+#
+# class DeletePlane(View):
+#     def get(self, request, id):
+#         if request.user.is_authenticated and request.user.is_superuser:
+#             Airplane.objects.get(id=id).delete()
+#         return redirect("the-main-page")
+#
+#
+# class CreateNation(View):
+#     def post(self, request):
+#         if request.user.is_authenticated and request.user.is_superuser:
+#             Nation.objects.create(
+#                 country=request.POST['nation'],
+#                 image=request.POST[],                                                                # should will fix
+#             )
+#         return redirect('the-main-page')
+#
+#
+# class DeleteNation(View):
+#     def get(self, request, id):
+#         if request.user.is_authenticated and request.user.is_superuser:
+#             Nation.objects.get(id=id).delete()
+#         return redirect("the-main-page")
+
+
+class CreateCategory(View):
+    def get(self, request):
+        if request.user.is_authenticated and request.user.is_superuser:
+            context = dict()
+            plane = Airplane.objects.annotate(count_likes=Count("users_likes")) \
+                .select_related("nation", "category") \
+                .prefetch_related("users_tags", "users_likes") \
+                .order_by("nation_id", "category_id", "model")
+            context["planes_list"] = plane
+            nation = Nation.objects.all()
+            context["nation"] = nation
+            category = Category.objects.all()
+            context['category'] = category
+            return render(request, "planes/add_category.html", context)
+
+    def post(self, request):
+        if request.user.is_authenticated and request.user.is_superuser:
+            Category.objects.create(
+                name=request.POST['category_name'],
+            )
+        return redirect('the-main-page')
+
+
+class DeleteCategory(View):
+    def get(self, request, url):
+        if request.user.is_authenticated and request.user.is_superuser:
+            Category.objects.get(url=url).delete()
+        return redirect("the-main-page")
+
+
+class CreateNews(View):
+    def get(self, request):
+        if request.user.is_authenticated and request.user.is_superuser:
+            context = dict()
+            plane = Airplane.objects.annotate(count_likes=Count("users_likes")) \
+                .select_related("nation", "category") \
+                .prefetch_related("users_tags", "users_likes") \
+                .order_by("nation_id", "category_id", "model")
+            context["planes_list"] = plane
+            nation = Nation.objects.all()
+            context["nation"] = nation
+            category = Category.objects.all()
+            context['category'] = category
+            return render(request, "planes/add_news.html", context)
+
+    def post(self, request):
+        if request.user.is_authenticated and request.user.is_superuser:
+            NewsModel.objects.create(
+                title=request.POST['title'],
+                text=request.POST['text'],
+            )
+            return redirect('news')
+
+
+class DeleteNews(View):
+    def get(self, request, id):
+        if request.user.is_authenticated and request.user.is_superuser:
+            NewsModel.objects.get(id=id).delete()
+        return redirect("news")

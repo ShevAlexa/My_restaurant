@@ -1,0 +1,29 @@
+{% extends 'planes/main_template.html' %}
+
+{% block add_category %}
+
+<div class="container">
+    <form method="post" action="{% url 'add_category' %}">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-body">
+
+                <hr style="height:3px">
+                <center><p><h2>Добавить категорию</h2></p></center>
+                <hr style="height:3px">
+
+                <center>
+
+                    <label for="category_name"></label>
+                    <textarea rows="1" cols="50" id="category_name" name="category_name">Название</textarea><br>
+
+                    <input type="submit" value="Отправить">
+
+                </center>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

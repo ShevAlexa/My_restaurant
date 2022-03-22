@@ -6,6 +6,14 @@
     {% for new in news %}
     <div class="card-news">
 
+        {% if user.is_authenticated and user.is_superuser %}
+
+            <a href="{% url 'delete_news' id=new.id%}">
+              <button type="button" class="btn-close" aria-label="Close"></button>
+            </a>
+
+        {% endif %}
+
         {% if new.date >= user.last_login %}
             <div class="card-header-new">
                 <h5>● New post</h5>
