@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 from slugify import slugify
 
@@ -54,7 +54,7 @@ class Airplane(models.Model):
     production_volume = models.PositiveIntegerField("Единиц произведено", default=0)
     reference = models.TextField("Справка")
     image = models.ImageField("Изображение", upload_to='planes/')
-    nation = models.ForeignKey(Nation, verbose_name="Нация", on_delete=models.CASCADE)
+    nation = models.ForeignKey(Nation, verbose_name="Нация", on_delete=models.CASCADE, null=True)
     url = models.SlugField(max_length=150, unique=True)
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
     users_likes = models.ManyToManyField(User, through="LikeAirplaneUser", related_name="liked_airplane")

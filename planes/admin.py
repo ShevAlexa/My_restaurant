@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import Category, Airplane, Comment, Nation, NewsModel
 
-admin.site.register(Category)
-admin.site.register(Nation)
 admin.site.register(NewsModel)
 
 
@@ -18,4 +16,14 @@ class AirPlaneAdmin(admin.ModelAdmin):
     prepopulated_fields = {"url": ("model",)}
 
 
-admin.site.register(Airplane, AirPlaneAdmin)
+class NationAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"url": ("country",)}
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"url": ("name",)}
+
+
+admin.site.register(Airplane, AirPlaneAdmin,)
+admin.site.register(Nation, NationAdmin)
+admin.site.register(Category, CategoryAdmin)

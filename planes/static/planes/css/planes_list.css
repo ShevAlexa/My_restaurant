@@ -110,6 +110,28 @@ main button.btn-close:hover{
 }
 
 
+main div.admin-add{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+main label.required{
+    display: block;
+}
+
+
+main input.vTextField{
+    width: 42%;
+}
+
+
+main input.submit-button{
+    margin-top: 5px;
+}
+
+
 aside a.nav-link{
     display: block;
     transition: 0.5s;

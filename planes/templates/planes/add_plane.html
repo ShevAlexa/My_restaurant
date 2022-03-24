@@ -5,49 +5,49 @@
 <div class="container">
     <form method="post" action="{% url 'add_plane' %}">
         {% csrf_token %}
-        <div class="card">
-            <div class="card-body">
 
-                <hr style="height:3px">
-                <center><p><h2>Добавить самолёт</h2></p></center>
-                <hr style="height:3px">
+        <div class="admin-add">
+            <div class="card">
+                <div class="card-body">
 
-                <center>
+                    <hr style="height:3px">
+                    <center><p><h3>Добавить самолёт</h3></p></center>
+                    <hr style="height:3px">
 
-                    <label for="model"></label>
-                    <textarea rows="1" cols="30" id="model" name="model"></textarea><br>
-                    <label for="cruising_speed"></label>
-                    <textarea rows="1" cols="30" id="cruising_speed" name="cruising_speed"></textarea><br>
-                    <label for="constructor"></label>
-                    <textarea rows="1" cols="50" id="constructor" name="constructor"></textarea><br>
-                    <label for="engine_type"></label>
-                    <textarea rows="1" cols="50" id="engine_type" name="engine_type"></textarea><br>
-                    <label for="production_volume"></label>
-                    <textarea rows="1" cols="10" id="production_volume" name="production_volume"></textarea><br>
-                    <label for="reference"></label>
-                    <textarea rows="5" cols="100" id="reference" name="reference"></textarea><br>
-                    <label for="image"></label>
-                    <textarea rows="1" cols="50" id="image" name="image"></textarea><br>
-                    <label for="nation"></label>
-                    <select>
+                    <label class="required" for="model">Модель:</label>
+                    <input type="text" name="model" class="vTextField" maxlength="50" required="" id="model"><br>
+                    <label class="required" for="cruising_speed">Скорость:</label>
+                    <input type="text" name="cruising_speed" class="vTextField" maxlength="50" required="" id="cruising_speed"><br>
+                    <label class="required" for="constructor">Конструктор:</label>
+                    <input type="text" name="constructor" class="vTextField" maxlength="50" required="" id="constructor"><br>
+                    <label class="required" for="engine_type">Тип двигателя:</label>
+                    <input type="text" name="engine_type" class="vTextField" maxlength="50" required="" id="engine_type"><br>
+                    <label class="required" for="production_volume">Единиц произведено:</label>
+                    <input type="text" name="production_volume" class="vTextField" maxlength="50" required="" id="production_volume"><br>
+                    <label class="required" for="reference">Справка:</label>
+                    <textarea rows="5" cols="70" id="reference" name="reference"></textarea><br>
+                    <label class="required" for="image">Изображение:</label>
+                    <input type="file" name="image" accept="image/*" required="" id="image"><br>
+
+                    <label class="required" for="nation">Нация:</label>
+                    <select name="nation" id="nation">
                         {% for country in nation %}
                             <option>{{ country }}</option>
                         {% endfor %}
                     </select>
-                    <label for="category"></label>
-                    <select>
-                        {% for country in nation %}
-                            <option>{{ country }}</option>
+                    <label class="required" for="category">Категория:</label>
+                    <select name="category" id="category">
+                        {% for name in category %}
+                            <option>{{ name }}</option>
                         {% endfor %}
                     </select>
 
-                    <input type="submit" value="Отправить">
+                    <center><input class="submit-button" type="submit" value="Отправить"></center>
 
-
-                </center>
-
+                </div>
             </div>
         </div>
+
     </form>
 </div>
 

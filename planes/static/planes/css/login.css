@@ -42,3 +42,9 @@ main input.button-sign-in:hover{
     background: #8dbff8;
     transition: all .3s linear;
 }
+
+
+main div.mistake{
+    color: red;
+    margin-bottom: 15px;
+}

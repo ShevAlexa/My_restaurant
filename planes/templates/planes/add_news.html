@@ -5,27 +5,27 @@
 <div class="container">
     <form method="post" action="{% url 'add_news' %}">
         {% csrf_token %}
-        <div class="card">
-            <div class="card-body">
 
-                <hr style="height:3px">
-                <center><p><h2>Добавить новость</h2></p></center>
-                <hr style="height:3px">
+        <div class="admin-add">
+            <div class="card">
+                <div class="card-body">
 
-                <center>
+                    <hr style="height:3px">
+                    <center><p><h3>Добавить новость</h3></p></center>
+                    <hr style="height:3px">
 
-                    <label for="title"></label>
-                    <textarea rows="1" cols="50" id="title" name="title">Название</textarea><br>
+                    <label class="required" for="title">Заголовок:</label>
+                    <input type="text" name="title" class="vTextField" maxlength="50" required="" id="title"><br>
 
-                    <label for="text"></label>
-                    <textarea rows="5" cols="100" id="text" name="text">Текст</textarea><br>
+                    <label class="required" for="text">Текст</label>
+                    <textarea rows="5" cols="70" id="text" name="text"></textarea><br>
 
-                    <input type="submit" value="Отправить">
+                    <center><input class="submit-button" type="submit" value="Отправить"></center>
 
-                </center>
-
+                </div>
             </div>
         </div>
+
     </form>
 </div>
 

@@ -1,0 +1,32 @@
+{% extends 'planes/main_template.html' %}
+
+{% block add_nation %}
+
+<div class="container">
+    <form method="post" action="{% url 'add_nation' %}">
+        {% csrf_token %}
+
+        <div class="admin-add">
+            <div class="card">
+                <div class="card-body">
+
+                    <hr style="height:3px">
+                    <center><p><h3>Добавить нацию</h3></p></center>
+                    <hr style="height:3px">
+
+                    <label class="required" for="id_country">Страна:</label>
+                    <input type="text" name="country" class="vTextField" maxlength="50" required="" id="id_country"><br>
+
+                    <label class="required" for="id_image">Изображение:</label>
+                    <input type="file" name="image" accept="image/*" required="" id="id_image"><br>
+
+                    <center><input class="submit-button" type="submit" value="Отправить"></center>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

@@ -84,9 +84,13 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for name in category %}
                   <li class="nav-item">
-                    <a href="{% url 'delete_category' url=name.url %}">
-                      <button type="button" class="btn-close" aria-label="Close"></button>
-                    </a>
+
+                    {% if user.is_authenticated and user.is_superuser %}
+                      <a href="{% url 'delete_category' url=name.url %}">
+                        <button type="button" class="btn-close" aria-label="Close"></button>
+                      </a>
+                    {% endif %}
+
                     <a class="nav-link active" aria-current="page" href="{% url 'order_by_category' url=name.url %}">{{ name }}</a>
                   </li>
                 {% endfor %}
@@ -101,8 +105,8 @@
                 Инструменты администратора
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Добавить самолёт</a></li>
-                <li><a class="dropdown-item" href="#">Добавить нацию</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_plane' %}">Добавить самолёт</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_nation' %}">Добавить нацию</a></li>
                 <li><a class="dropdown-item" href="{% url 'add_category' %}">Добавить категорию</a></li>
                 <li><a class="dropdown-item" href="{% url 'add_news' %}">Добавить новость</a></li>
               </ul>
@@ -155,13 +159,16 @@
     {% block news %}
     {% endblock %}
 
-<!--    {%  block add_plane %}-->
-<!--    {% endblock %}-->
+    {%  block add_plane %}
+    {% endblock %}
 
     {% block add_news %}
     {% endblock %}
 
     {% block add_category %}
+    {% endblock %}
+
+    {% block add_nation %}
     {% endblock %}
 
     <div class="bottom-page-text">

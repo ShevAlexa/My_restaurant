@@ -5,24 +5,24 @@
 <div class="container">
     <form method="post" action="{% url 'add_category' %}">
         {% csrf_token %}
-        <div class="card">
-            <div class="card-body">
 
-                <hr style="height:3px">
-                <center><p><h2>Добавить категорию</h2></p></center>
-                <hr style="height:3px">
+        <div class="admin-add">
+            <div class="card">
+                <div class="card-body">
 
-                <center>
+                    <hr style="height:3px">
+                    <center><p><h3>Добавить категорию</h3></p></center>
+                    <hr style="height:3px">
 
-                    <label for="category_name"></label>
-                    <textarea rows="1" cols="50" id="category_name" name="category_name">Название</textarea><br>
+                    <label class="required" for="category_name">Категория:</label>
+                    <input type="text" name="category_name" class="vTextField" maxlength="50" required="" id="category_name"><br>
 
-                    <input type="submit" value="Отправить">
+                    <center><input class="submit-button" type="submit" value="Отправить"></center>
 
-                </center>
-
+                </div>
             </div>
         </div>
+
     </form>
 </div>
 
