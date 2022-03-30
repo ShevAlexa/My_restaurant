@@ -47,7 +47,7 @@ class Nation(models.Model):
 
 
 class Airplane(models.Model):
-    model = models.CharField("Модель", max_length=100, db_index=True)
+    model = models.CharField("Модель", max_length=100, db_index=True, unique=True)
     cruising_speed = models.CharField("Cкорость", max_length=5, null=True)
     constructor = models.CharField("Конструктор", max_length=30, null=True)
     engine_type = models.CharField("Тип двигателя", max_length=50, null=True)

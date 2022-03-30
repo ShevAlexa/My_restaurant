@@ -96,23 +96,24 @@
                 {% endfor %}
               </ul>
             </li>
-          </ul>
 
           {% if user.is_authenticated and user.is_superuser %}
 
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle settings" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Инструменты администратора
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="{% url 'add_plane' %}">Добавить самолёт</a></li>
-                <li><a class="dropdown-item" href="{% url 'add_nation' %}">Добавить нацию</a></li>
-                <li><a class="dropdown-item" href="{% url 'add_category' %}">Добавить категорию</a></li>
-                <li><a class="dropdown-item" href="{% url 'add_news' %}">Добавить новость</a></li>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-link active" aria-current="page" href="{% url 'add_plane' %}">Добавить самолёт</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'add_nation' %}">Добавить нацию</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'add_category' %}">Добавить категорию</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'add_news' %}">Добавить новость</a>
               </ul>
-            </div>
+            </li>
 
           {% endif %}
+
+          </ul>
 
           <form class="d-flex" action="{% url 'the-main-page' %}">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
@@ -159,7 +160,10 @@
     {% block news %}
     {% endblock %}
 
-    {%  block add_plane %}
+    {% block add_plane %}
+    {% endblock %}
+
+    {% block edit_plane %}
     {% endblock %}
 
     {% block add_news %}

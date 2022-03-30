@@ -98,15 +98,28 @@ main div.comment{
 }
 
 
-main button.btn-close{
+main button.btn-danger, button.btn-secondary{
     float: right;
     display: block;
     transition: 0.5s;
+    margin: 5px;
+    margin-bottom: 8px;
+    width: 70px;
+    height: 35px;
+    border-style: none;
+    border-radius: 10px;
 }
 
 
-main button.btn-close:hover{
+main button.btn-danger:hover{
     transform: scale(1.2);
+    background-color: #ff0000;
+}
+
+
+main button.btn-secondary:hover{
+    transform: scale(1.2);
+    background-color: #4d4d4d;
 }
 
 
@@ -132,13 +145,72 @@ main input.submit-button{
 }
 
 
-aside a.nav-link{
+main input.comment-button, .submit-button{
+    border-radius: 8px;
+    border-color: #4141ff;
+    border-style: outset;
+    background-color: #8dbff8;
+    height: 35px;
+    color: #4141ff;
+    transition: 0.5s;
+    display: block;
+}
+
+
+main input.submit-button:hover{
+    background-color: #02afff;
+    transform: scale(1.1);
+}
+
+
+main input.comment-button:hover{
+    background-color: #02afff;
+    transform: scale(1.1);
+}
+
+
+main textarea{
+    border-radius: 10px;
+    border-width: 2px;
+    width: 100%;
+    height: 100px;
+}
+
+
+main button.btn-close{
+    float: right;
     display: block;
     transition: 0.5s;
 }
 
 
+main button.btn-close:hover{
+    transform: scale(1.2);
+}
+
+
+aside a.nav-link{
+    display: block;
+    transition: 0.5s;
+    margin-left: 3px;
+}
+
+
 aside a.nav-link:hover{
+    transform: scale(1.075);
+}
+
+
+aside a.settings{
+    background-color: #a6a5a5;
+    border-radius: 12px;
+    margin-left: 10px;
+    color: black;
+}
+
+
+aside a.settings:hover{
+    background-color: #6c6c6c;
     transform: scale(1.075);
 }
 

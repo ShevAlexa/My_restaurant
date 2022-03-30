@@ -67,44 +67,6 @@ class TagPlane(View):
         return redirect(redirect_address, url=chousen_url)
 
 
-# class OrderByNation(View):
-#     def get(self, request, url):
-#         context = dict()
-#         filter_id = Nation.objects.get(url=url).id
-#         plane = Airplane.objects.filter(nation_id=filter_id)\
-#             .annotate(count_likes=Count("users_likes"))\
-#             .select_related("nation", "category")\
-#             .prefetch_related("users_tags", "users_likes")\
-#             .order_by("category_id", "model")
-#         context["planes_list"] = plane
-#         chosen_nation = Nation.objects.get(url=url)
-#         context["chosen_nation"] = chosen_nation
-#         nation = Nation.objects.all()
-#         context["nation"] = nation
-#         category = Category.objects.all()
-#         context['category'] = category
-#         return render(request, "planes/order_by_nation.html", context)
-#
-#
-# class OrderByCategory(View):
-#     def get(self, request, url):
-#         context = dict()
-#         filter_id = Category.objects.get(url=url).id
-#         plane = Airplane.objects.filter(category_id=filter_id)\
-#             .annotate(count_likes=Count("users_likes"))\
-#             .select_related("nation", "category")\
-#             .prefetch_related("users_tags", "users_likes")\
-#             .order_by("nation", "model")
-#         chosen_category = Category.objects.get(url=url)
-#         context["chosen_category"] = chosen_category
-#         context["planes_list"] = plane
-#         nation = Nation.objects.all()
-#         context["nation"] = nation
-#         category = Category.objects.all()
-#         context['category'] = category
-#         return render(request, "planes/order_by_category.html", context)
-
-
 class OrderBy(View):
     def get(self, request, url):
         context = dict()
@@ -144,16 +106,7 @@ class OrderBy(View):
 
 class PlaneInfo(View):
     def get(self, request, url):
-        context = dict()
-        comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
-        comments = Prefetch("comments", comment_query)
-        plane = Airplane.objects.select_related("nation", "category").prefetch_related(comments).get(url=url)
-        context["plane"] = plane
-        nation = Nation.objects.all()
-        context["nation"] = nation
-        category = Category.objects.all()
-        context['category'] = category
-        return render(request, "planes/plane_info.html", context)
+        return render(request, "planes/plane_info.html", plane_info_context(url))
 
 
 class SavedPlanes(View):
@@ -251,6 +204,47 @@ class CreatePlane(View):
         return redirect('the-main-page')
 
 
+class EditPlane(PlaneInfo):
+    # class for make some changes in plane
+
+    def get(self, request, url):
+        if request.user.is_authenticated and request.user.is_superuser:
+            return render(request, "planes/edit_plane.html", plane_info_context(url))
+
+    def post(self, request, url):
+        if request.user.is_authenticated and request.user.is_superuser:
+
+            plane = Airplane.objects.get(url=url)
+
+            try:
+                shutil.copy(f"C:/Users/User/OneDrive/Рабочий стол/images/{request.POST['image']}",
+                            "D:/PyCharm/IT_OVERONE/my_restaurant/my_restaurant/media/planes")
+            except:
+                print("image already in dir")
+
+            plane.model = request.POST.get('model')
+            plane.cruising_speed = request.POST.get('cruising_speed')
+            plane.constructor = request.POST.get('constructor')
+            plane.engine_type = request.POST.get('engine_type')
+            plane.production_volume = int(request.POST.get('production_volume'))
+            plane.reference = request.POST.get('reference')
+            plane.image = f"planes/{request.POST['image']}"
+            plane.nation = Nation.objects.get(country__icontains=request.POST['nation'])
+            plane.category = Category.objects.get(name__icontains=request.POST['category'])
+            plane.save()
+
+            return redirect("plane_info", url=plane.url)
+
+
+class DeletePlane(View):
+    # class for delete plane from plane_list
+
+    def get(self, request, url):
+        if request.user.is_authenticated and request.user.is_superuser:
+            Airplane.objects.get(url=url).delete()
+            return redirect('the-main-page')
+
+
 class CreateNation(View):
     # class for creating nation in nav-bar module
 
@@ -269,6 +263,17 @@ class CreateNation(View):
                 image=image,
             )
         return redirect('the-main-page')
+
+
+class DeleteNation(View):
+    # class for delete nation from nation_list
+
+    def get(self, request, url):
+        if request.user.is_authenticated and request.user.is_superuser:
+            nation = Nation.objects.get(url=url)
+            Airplane.objects.filter(nation=nation).delete()
+            nation.delete()
+        return redirect("the-main-page")
 
 
 class CreateCategory(View):
@@ -321,7 +326,6 @@ class DeleteNews(View):
 
 
 def create_context():
-
     # collection function for all plane information (without prefetch to comments)
 
     context = dict()
@@ -330,6 +334,19 @@ def create_context():
         .prefetch_related("users_tags", "users_likes") \
         .order_by("nation_id", "category_id", "model")
     context["planes_list"] = plane
+    nation = Nation.objects.all()
+    context["nation"] = nation
+    category = Category.objects.all()
+    context['category'] = category
+    return context
+
+
+def plane_info_context(url):
+    context = dict()
+    comment_query = Comment.objects.annotate(count_likes=Count("users_likes")).select_related("author")
+    comments = Prefetch("comments", comment_query)
+    plane = Airplane.objects.select_related("nation", "category").prefetch_related(comments).get(url=url)
+    context["plane"] = plane
     nation = Nation.objects.all()
     context["nation"] = nation
     category = Category.objects.all()

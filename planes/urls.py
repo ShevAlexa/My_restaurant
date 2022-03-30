@@ -25,5 +25,7 @@ urlpatterns = [
     path("delete-category/<str:url>/", views.DeleteCategory.as_view(), name="delete_category"),
     path("add-nation/", views.CreateNation.as_view(), name="add_nation"),
     path("add-plane/", views.CreatePlane.as_view(), name="add_plane"),
+    path("edit-plane/<str:url>/", views.EditPlane.as_view(), name="edit_plane"),
+    path("delete-plane/<str:url>/", views.DeletePlane.as_view(), name="delete_plane"),
     path("the-main-page", views.AirPlaneView.as_view(), name='the-main-page'),
 ]
