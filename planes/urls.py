@@ -7,8 +7,6 @@ urlpatterns = [
     path("add-airplane-like/<int:id>/<str:redirect_address>/<str:chousen_url>/",
          views.AddAirplaneLike.as_view(), name='add-airplane-like'),
     path("tag-plane/<int:id>/<str:redirect_address>/<str:chousen_url>/", views.TagPlane.as_view(), name='tag-plane'),
-    # path("order-by-nation/<str:url>/", views.OrderByNation.as_view(), name='order_by_nation'),
-    # path("order-by-category/<str:url>/", views.OrderByCategory.as_view(), name='order_by_category'),
     path("order-by-nation/<str:url>/", views.OrderBy.as_view(), name='order_by_nation'),
     path("order-by-category/<str:url>/", views.OrderBy.as_view(), name='order_by_category'),
     path("saved-planes/", views.SavedPlanes.as_view(), name='saved_planes'),

@@ -1,7 +1,6 @@
 import shutil
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect

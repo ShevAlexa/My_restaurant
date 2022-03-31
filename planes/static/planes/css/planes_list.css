@@ -64,6 +64,7 @@ main div.card{
     background: url("bg_card_2.jpg");
     width: 100%;
     height: 100%;
+    border-radius: 15px;
 }
 
 
@@ -72,6 +73,7 @@ main div.card-news{
     width: 100%;
     height: 100%;
     margin: 15px;
+    border-radius: 15px;
 }
 
 
@@ -106,8 +108,9 @@ main button.btn-danger, button.btn-secondary{
     margin-bottom: 8px;
     width: 70px;
     height: 35px;
-    border-style: none;
+    border-style: outset;
     border-radius: 10px;
+    border-width: 2px;
 }
 
 
@@ -132,28 +135,34 @@ main div.admin-add{
 
 main label.required{
     display: block;
+    font-weight: bold;
+    font-size: 17px;
 }
 
 
 main input.vTextField{
     width: 42%;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: grey;
+    border-style: outset;
 }
 
 
 main input.submit-button{
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 
 main input.comment-button, .submit-button{
     border-radius: 8px;
-    border-color: #4141ff;
+    border-width: 2px;
     border-style: outset;
     background-color: #8dbff8;
-    height: 35px;
     color: #4141ff;
     transition: 0.5s;
     display: block;
+    height: 40px;
 }
 
 
@@ -170,6 +179,7 @@ main input.comment-button:hover{
 
 
 main textarea{
+    border-style: outset;
     border-radius: 10px;
     border-width: 2px;
     width: 100%;
@@ -180,12 +190,21 @@ main textarea{
 main button.btn-close{
     float: right;
     display: block;
+    margin-top: 5px;
+    margin-right: 5px;
     transition: 0.5s;
 }
 
 
 main button.btn-close:hover{
     transform: scale(1.2);
+}
+
+
+main select{
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
 }
 
 
