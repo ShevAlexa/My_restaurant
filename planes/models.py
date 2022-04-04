@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 from slugify import slugify
 
@@ -86,7 +86,7 @@ class Comment(models.Model):
                                verbose_name="Автор комментария",
                                null=True,
                                blank=True,
-                               default=User)
+                               default=User.username)
     users_likes = models.ManyToManyField(User, through="LikeCommentUser", related_name="liked_comment")
     likes = models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True, null=True)
@@ -161,7 +161,3 @@ class NewsModel(models.Model):
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
-
-
-# class Users(AbstractUser):
-#     pass

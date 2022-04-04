@@ -2,6 +2,7 @@ import shutil
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.models import User
 from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect
 from django.views import View
@@ -18,12 +19,19 @@ class AirPlaneView(View):
                 .annotate(count_likes=Count("users_likes")) \
                 .select_related("nation", "category")\
                 .prefetch_related("users_tags", "users_likes")\
-                .order_by("category_id", "model")
+                .order_by("nation_id", "category_id", "model")
+            nation_list = list()
+            for p in plane:
+                if p.nation not in nation_list:
+                    nation_list.append(Nation.objects.get(country=p.nation))
+            context["nation_list"] = nation_list
         else:
             plane = Airplane.objects.annotate(count_likes=Count("users_likes"))\
                 .select_related("nation", "category")\
                 .prefetch_related("users_tags", "users_likes")\
                 .order_by("category_id", "model")
+            nation_list = Nation.objects.all()
+            context["nation_list"] = nation_list
         context["planes_list"] = plane
         nation = Nation.objects.all()
         context["nation"] = nation
